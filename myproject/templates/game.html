@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Login Page {% endblock %}
+
+{% block content %}
+    
+    <div class="col">
+        <div class="h-100 p-5 bg-light border rounded-3 text-center">
+            <h1>Game</h1>
+            {% if gameover %}
+            <h1>{{gameover}}</h1>
+        {% endif %}
+
+        
+
+        {% if mdict %}
+            {% for quest, result in mdict.items() %}
+                <p>{{quest}}</p><br>
+                <p>{{result[0]}}</p><br>
+                {% if result[1] == True%}
+                    <div class="btn btn-success mb-3">Correct</div>
+                {% else %}
+                    <div class="btn btn-danger mb-3">Wrong</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <p>{{ key }}</p>
+        {% for i in value_list %}
+            <p>{{i}}</p>
+        {% endfor %}
+
+        {% if form %}
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.global_answer(placeholder='Enter a answer') }}
+                {{ form.submit }}
+            </form>
+        {% endif %}
+        
+        </div>
+    </div>
+   
+{% endblock %}
