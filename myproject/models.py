@@ -16,6 +16,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     surname = db.Column(db.String(64))
+    # point = db.Column(db.Integer, default=0)
     login = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     # token = db.Column(db.Text)

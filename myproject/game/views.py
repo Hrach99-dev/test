@@ -1,3 +1,4 @@
+from operator import le
 import random
 from flask import render_template, redirect, Blueprint, session, url_for
 from myproject.game.forms import GameForm
@@ -39,18 +40,17 @@ keys = list(splited_quest_ans_list.keys())
 correct_result = 0
 
 
-@games.route('/game', methods=['GET', 'POST'])
-def game():
+@games.route('/runner')
+def runner():
+    return render_template('game.html')
+
+
+@games.route('/millionaire', methods=['GET', 'POST'])
+def millionaire():
 
     global mdict
     global count
-    gameover = None
     global correct_result
-    if count == 10:
-        session['mdict'] = mdict
-        session['correct_result'] = correct_result
-        print(correct_result)
-        return redirect(url_for('result'))
 
     key = keys[count]
     value_dict = splited_quest_ans_list[f'{key}']
@@ -58,20 +58,24 @@ def game():
     random.shuffle(value_list)
     form = GameForm()
     form_answer = form.global_answer.data
-
     if form.validate_on_submit():
-        print(value_dict['correct'])
-        print(form.global_answer.data)
-        
+        if count == len(keys) - 1:
+            return redirect(url_for('games.dashboard'))
+
         if form_answer == value_dict['correct']:
             flag = True
-            correct_result += 1
+            correct_result += 1 
         else:
             flag = False
+            
 
         mdict[key] = [form_answer, flag]
         count += 1
                     
-        # return redirect(url_for('core.index'))
-    return render_template('game.html', key=key, form=form, value_list=value_list, mdict=mdict, gameover=gameover, count=count)
+        return redirect(url_for('games.millionaire'))
+    return render_template('millionaire.html', key=key, form=form, value_list=value_list, mdict=mdict, count=count, correct_result=correct_result)
     
+
+@games.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')

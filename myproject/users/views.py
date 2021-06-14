@@ -42,7 +42,7 @@ def login():
             next = request.args.get('next')
 
             if next == None or not next[0] == '/':
-               next = url_for('games.game') 
+               next = url_for('games.runner') 
             
             return redirect(next)
         
