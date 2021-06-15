@@ -7,7 +7,9 @@
     
     <div class="col">
         <div class="h-100 p-5 bg-light border rounded-3 text-center">
-            <h1>Dashboard</h1>
+            {% for i in user %}
+                <p>{{ i.name }} ------- {{ i.point }}</p>
+            {% endfor %}
         </div>
     </div>
    

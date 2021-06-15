@@ -15,6 +15,7 @@ def register():
     if form.validate_on_submit():
         user = User(name=form.name.data,
                     surname=form.surname.data,
+                    point=0,
                     login=form.login.data,
                     password=form.password.data)
 
@@ -49,5 +50,11 @@ def login():
             
             
     return render_template('login.html', form=form)
+
+
+@users.route('/dashboard')
+def dashboard():
+    user = User.query.all()
+    return render_template('dashboard.html', user=user)
 
 

@@ -3,12 +3,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.security import safe_str_cmp
 
 
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return User.query.get(user_id)
-
-
-
 class User(db.Model):
 
     __tablename__ = 'users'
@@ -16,14 +10,15 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     surname = db.Column(db.String(64))
-    # point = db.Column(db.Integer, default=0)
+    point = db.Column(db.Integer)
     login = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     # token = db.Column(db.Text)
 
-    def __init__(self, name, surname, login, password) -> None:
+    def __init__(self, name, surname, point, login, password) -> None:
         self.name = name
         self.surname = surname
+        self.point = point
         self.login = login
         # self.token = token
         self.password_hash = generate_password_hash(password)
