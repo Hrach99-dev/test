@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Login Page {% endblock %}
+
+{% block content %}
+    
+        
+    <div class="col">
+        <div class="h-100 p-5 bg-light border rounded-3 text-center">
+            <form method="POST">
+            {{form.hidden_tag()}}
+            <h4 class="mb-3">Verification code</h4>
+            {{form.verification_field1(class='text-center border pt-2 pb-2 border-primary rounded-3', style='width: 45px;')}}
+            {{form.verification_field2(class='text-center border pt-2 pb-2 border-primary rounded-3', style='width: 45px;')}}
+            {{form.verification_field3(class='text-center border pt-2 pb-2 border-primary rounded-3', style='width: 45px;')}}
+            {{form.verification_field4(class='text-center border pt-2 pb-2 border-primary rounded-3', style='width: 45px;')}} 
+            {{form.verification_field5(class='text-center border pt-2 pb-2 border-primary rounded-3', style='width: 45px;')}} 
+            {{form.verification_field6(class='text-center border pt-2 pb-2 border-primary rounded-3', style='width: 45px;')}}
+            {{form.submit(class='pt-2 pb-2 btn btn-outline-primary rounded-3', style='width: 100px;')}}
+            </form>
+        </div>
+    </div>
+        
+    
+{% endblock %}

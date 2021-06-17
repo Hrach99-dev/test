@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_mail import Mail
 # from flask_jwt import JWT, jwt_required, current_identity
 # from myproject.models import authenticate, identity
 
@@ -13,6 +14,16 @@ app.config['SECRET_KEY'] = 'msk'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'dfg17653@gmail.com'
+app.config['MAIL_PASSWORD'] = 'abcdfg123'
+app.config['MAIL_DEFAULT_SENDER'] = 'dfg17653@gmail.com'
+
+
+
+mail = Mail(app)
 
 db = SQLAlchemy(app)
 Migrate(app, db)

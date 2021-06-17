@@ -22,3 +22,14 @@ class RegisterForm(FlaskForm):
     def check_login(self,field):
         if User.query.filter_by(login=field.data).first():
             raise ValidationError('Your login has been registered!')
+
+
+
+class VerificationForm(FlaskForm):
+    verification_field1 = StringField('Verification code field 1', validators=[DataRequired()])
+    verification_field2 = StringField('Verification code field 2', validators=[DataRequired()])
+    verification_field3 = StringField('Verification code field 3', validators=[DataRequired()])
+    verification_field4 = StringField('Verification code field 4', validators=[DataRequired()])
+    verification_field5 = StringField('Verification code field 5', validators=[DataRequired()])
+    verification_field6 = StringField('Verification code field 6', validators=[DataRequired()])
+    submit = SubmitField('Verification')
