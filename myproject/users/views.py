@@ -24,11 +24,12 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         verification_code = generate_verification_code()
-        msg = Message(f'{verification_code} is your verification code', recipients=['lirore4288@d4wan.com'])
+        msg = Message(f'{verification_code} is your verification code', recipients=[form.email.data])
         mail.send(msg)
 
         session['name'] = form.name.data
         session['surname'] = form.surname.data
+        session['email'] = form.email.data
         session['login'] = form.login.data
         session['password'] = form.password.data
         session['verification_code'] = verification_code
@@ -53,6 +54,7 @@ def verification():
             form.verification_field6.data) == session['verification_code']:
             user = User(name=session['name'],
                         surname=session['surname'],
+                        email=session['email'],
                         point=0,
                         login=session['login'],
                         password=session['password'])
