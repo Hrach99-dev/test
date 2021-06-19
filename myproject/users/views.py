@@ -5,7 +5,7 @@ from myproject import db, mail
 from myproject.models import User
 from myproject.users.forms import LoginForm, RegisterForm, VerificationForm
 from flask_mail import Message
-
+from flask_login import login_user
 
 users = Blueprint('users', __name__)
 
@@ -55,7 +55,7 @@ def verification():
             user = User(name=session['name'],
                         surname=session['surname'],
                         email=session['email'],
-                        point=0,
+                        point=None,
                         login=session['login'],
                         password=session['password'])
 
@@ -79,6 +79,7 @@ def login():
         
         if user.check_password(form.password.data) and user:
             
+            login_user(user)
 
             next = request.args.get('next')
 
@@ -86,15 +87,14 @@ def login():
                next = url_for('games.runner') 
             
             return redirect(next)
-        
-            
-            
+          
     return render_template('login.html', form=form)
+
 
 
 @users.route('/dashboard')
 def dashboard():
-    user = User.query.all()
+    user = User.query.order_by(User.point.desc())
     return render_template('dashboard.html', user=user)
 
 

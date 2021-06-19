@@ -3,8 +3,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_mail import Mail
-# from flask_jwt import JWT, jwt_required, current_identity
-# from myproject.models import authenticate, identity
+from flask_login import LoginManager
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -29,7 +28,7 @@ db = SQLAlchemy(app)
 Migrate(app, db)
 
 
-# jwt = JWT(app, authenticate, identity)
+login_manager = LoginManager(app, db)
 
 
 from myproject.core.views import core

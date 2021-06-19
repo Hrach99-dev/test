@@ -1,9 +1,9 @@
-from operator import le
 import random
 from flask import render_template, redirect, Blueprint, session, url_for
 from myproject.game.forms import GameForm
-
-
+from flask_login import login_required, current_user
+from myproject.models import User
+from myproject import db
 
 games = Blueprint('games', __name__)
 
@@ -41,11 +41,16 @@ correct_result = 0
 
 
 @games.route('/runner')
+@login_required
 def runner():
+    user = User.query.filter_by(id=current_user.id).first()
+    user.point = 0
+    db.session.commit()
     return render_template('game.html')
 
 
 @games.route('/millionaire', methods=['GET', 'POST'])
+@login_required
 def millionaire():
 
     global mdict
@@ -58,13 +63,17 @@ def millionaire():
     random.shuffle(value_list)
     form = GameForm()
     form_answer = form.global_answer.data
+    user = User.query.filter_by(id=current_user.id).first()
+    
     if form.validate_on_submit():
         if count == len(keys) - 1:
-            return redirect(url_for('games.dashboard'))
+            return redirect(url_for('users.dashboard'))
 
         if form_answer == value_dict['correct']:
             flag = True
             correct_result += 1 
+            user.point += 1
+            db.session.commit()
         else:
             flag = False
             
@@ -75,7 +84,3 @@ def millionaire():
         return redirect(url_for('games.millionaire'))
     return render_template('millionaire.html', key=key, form=form, value_list=value_list, mdict=mdict, count=count, correct_result=correct_result)
     
-
-@games.route('/dashboard')
-def dashboard():
-    return render_template('dashboard.html')

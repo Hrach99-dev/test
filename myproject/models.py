@@ -1,9 +1,13 @@
-from myproject import db
+from myproject import db, login_manager
 from werkzeug.security import check_password_hash, generate_password_hash
-from werkzeug.security import safe_str_cmp
+from flask_login import UserMixin
 
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter_by(id=user_id).first()
+
+class User(db.Model, UserMixin):
 
     __tablename__ = 'users'
 
@@ -14,7 +18,7 @@ class User(db.Model):
     point = db.Column(db.Integer)
     login = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
-    # token = db.Column(db.Text)
+
 
     def __init__(self, name, surname, email, point, login, password) -> None:
         self.name = name
@@ -22,7 +26,6 @@ class User(db.Model):
         self.email = email
         self.point = point
         self.login = login
-        # self.token = token
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
@@ -30,14 +33,3 @@ class User(db.Model):
 
     def __repr__(self) -> str:
         return f'User - {self.name} {self.surname}'
-
-
-# def authenticate(login, password):
-#     user = User.query.filter_by(login=login).first()
-
-#     if user and safe_str_cmp(user.password, password):
-#         return user
-
-# def identity(payload):
-#     user_id = payload['identity']
-#     return User.query.filter_by(id=user_id).first()

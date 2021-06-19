@@ -7,9 +7,28 @@
     
     <div class="col">
         <div class="h-100 p-5 bg-light border rounded-3 text-center">
-            {% for i in user %}
-                <p>{{ i.name }} ------- {{ i.point }}</p>
-            {% endfor %}
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for i in user %}
+                        <tr>
+                            <td>{{i.name}}</td>
+                            <td>{{i.surname}}</td>
+                            <td>{{i.point}}</td>
+                        </tr>
+                        
+                    {% endfor %}
+                  
+                  
+                </tbody>
+              </table>
+            
         </div>
     </div>
    
