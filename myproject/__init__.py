@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_mail import Mail
 from flask_login import LoginManager
+from flask_restful import Api
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -29,6 +30,17 @@ Migrate(app, db)
 
 
 login_manager = LoginManager(app, db)
+
+api = Api(app)
+
+
+from myproject.game.add_quest import Quest, AllQuest, AddQuest
+
+
+
+api.add_resource(Quest, '/quest/<quest_id>')
+api.add_resource(AddQuest, '/addquest')
+api.add_resource(AllQuest, '/allquest')
 
 
 from myproject.core.views import core

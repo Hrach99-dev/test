@@ -33,3 +33,22 @@ class User(db.Model, UserMixin):
 
     def __repr__(self) -> str:
         return f'User - {self.name} {self.surname}'
+
+
+class GameQuest(db.Model):
+
+    __tablename__ = 'gamequest'
+
+    id = db.Column(db.Integer, primary_key=True)
+    quest = db.Column(db.Text, unique=True, index=True)
+    correct = db.Column(db.String(64))
+    wrong1 = db.Column(db.String(64))
+    wrong2 = db.Column(db.String(64))
+    wrong3 = db.Column(db.String(64))
+
+    def __init__(self, quest, correct, wrong1, wrong2, wrong3) -> None:
+        self.quest = quest
+        self.correct = correct
+        self.wrong1 = wrong1
+        self.wrong2 = wrong2
+        self.wrong3 = wrong3

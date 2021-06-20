@@ -61,7 +61,7 @@ def verification():
 
             db.session.add(user)
             db.session.commit()
-            return redirect(url_for('games.runner'))
+            return redirect(url_for('users.login'))
         else:
             return redirect(url_for('users.register'))
     return render_template('verification.html', form=form)
